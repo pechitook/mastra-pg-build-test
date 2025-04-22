@@ -27,3 +27,9 @@ TypeError: Invalid URL
 
 Node.js v22.14.0
 ```
+
+## Instructions
+
+1. Clone this
+1. `npm install`
+1. `npm run build`
