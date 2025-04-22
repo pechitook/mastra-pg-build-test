@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "mastra build -d ./src",
-    "dev": "mastra dev"
+    "dev": "mastra dev -d ./src"
   },
   "keywords": [],
   "author": "",
