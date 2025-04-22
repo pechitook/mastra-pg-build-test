@@ -28,6 +28,43 @@ TypeError: Invalid URL
 Node.js v22.14.0
 ```
 
+## Findings
+
+Seems that the `new PgVector` call here is the one causing the error.
+
+```ts
+export const postgresMemory = new Memory({
+  storage,
+  vector: new PgVector(connectionString),
+  options: {
+    lastMessages: 10,
+    semanticRecall: {
+      topK: 3,
+      messageRange: 2,
+    },
+  },
+});
+```
+
+## Workaround
+
+Conditionally instantiating the PgVector based on whether the env var is defined seems a safe workaround. In runtime the env var is there, but in build time it is not needed.
+
+```diff
+export const postgresMemory = new Memory({
+  storage,
+-  vector: new PgVector(connectionString),
++  vector: user ? new PgVector(connectionString) : false,
+  options: {
+    lastMessages: 10,
+    semanticRecall: {
+      topK: 3,
+      messageRange: 2,
+    },
+  },
+});
+```
+
 ## Instructions
 
 1. Clone this
